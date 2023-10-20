@@ -1,4 +1,5 @@
 .NavbarItems{
+    background-color: rgb(74, 191, 172);
     display:flex;
     justify-content: space-between;
     align-items: center;
