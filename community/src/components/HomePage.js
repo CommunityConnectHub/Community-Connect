@@ -5,12 +5,57 @@ import HomePgImg4 from "../assests/img4.jpg";
 import HPData from "./HPData";
 import "./HPgstyles.css"
 
+const loadScript = (src) => {
+    return new Promise((resolve) =>{
+      const script = document.createElement('script')
+      script.src = src
+  
+      script.onload = () => {
+        resolve(true)
+      }
+  
+      script.onerror = () => {
+        resolve(false)
+      }
+  
+      document.body.appendChild(script)
+    })
+  }
+  
+  const displayRazorpay = async (amount) => {
+    const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
+  
+    if (!res){
+      alert("You are offline... Failed to load Razorpay SDK")
+      return
+    }
+  
+    const options = {
+      key:'rzp_test_OlgK0vFCXKjoRp',
+      currency: "INR",
+      amount:amount * 100,
+      name: "Durgesh",
+      description: "Thanks For Donating",
+      handler: function(response){
+        alert(response.razorpay_payment_id)
+        alert("Payment Successfull")
+      },
+      prefill: {
+        name: "Durgesh"
+      }
+    };
+  
+    const paymentObject = new window.Razorpay(options)
+    paymentObject.open()
+  }
 
 const HomePage = () => {
     return (
         <div className="HomePage">
-            <h1>Join Us in Making a Difference</h1>
-            <p>At Community Connect Hub, we're dedicated to creating a brighter and more equitable future for those in need. Our mission is to uplift underserved communities through education, healthcare, and essential resources. By supporting our cause, you become an essential part of this transformative journey. Join us today and help build a world where every individual has the opportunity to thrive and fulfill their potential.</p>  
+            <h1>Join Us in Making a Difference</h1> 
+            <button onClick={() => displayRazorpay(1000)} >
+              Donate
+        </button>
             <HPData 
             className = "first-page"
                 heading="Be a part of something greater."
