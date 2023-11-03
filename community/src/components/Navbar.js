@@ -27,7 +27,9 @@ class Navbar extends Component {
                             </li>
                         );
                     })}
-                    <button>Sign up</button>
+                    <button>
+                        <Link to="/form">Donate</Link>
+                    </button>
                     
                 </ul>
             </nav>
